@@ -4,7 +4,7 @@ from tools.offboarding import SCHEMA, generate_offboarding_checklist
 
 class OffboardingAgent(BaseAgent):
     name = "offboarding"
-    model = "claude-sonnet-4-6"
+    model = "gemini-2.5-flash"
     max_iterations = 5
 
     system_prompt = """\

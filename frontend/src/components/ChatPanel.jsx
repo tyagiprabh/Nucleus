@@ -2,11 +2,19 @@ import { useState, useRef, useEffect } from 'react'
 
 const BACKEND = import.meta.env.VITE_BACKEND_URL || ''
 
+const AGENT_LABELS = {
+  onboarding:  'Aria · Onboarding',
+  offboarding: 'Felix · Offboarding',
+  compliance:  'Lex · Compliance',
+  candidate:   'Scout · Talent',
+  general:     'Nucleus',
+}
+
 const TOOL_LABELS = {
-  search_candidates:              'Searching candidates…',
-  generate_onboarding_checklist:  'Building onboarding checklist…',
-  generate_offboarding_checklist: 'Building offboarding checklist…',
-  get_country_compliance_info:    'Checking compliance rules…',
+  search_candidates:              'Searched candidates',
+  generate_onboarding_checklist:  'Built onboarding checklist',
+  generate_offboarding_checklist: 'Built offboarding checklist',
+  get_country_compliance_info:    'Checked compliance rules',
 }
 
 const SUGGESTIONS = [
@@ -37,46 +45,29 @@ export default function ChatPanel({ onToolActive }) {
     setMessages(prev => [...prev, { role: 'user', text: msg }])
     setLoading(true)
 
+    setMessages(prev => [...prev, { role: 'agent', text: '', agent: null, tools: [] }])
+
     const res = await fetch(`${BACKEND}/chat`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ message: msg, session_id: sessionId }),
     })
 
-    const reader = res.body.getReader()
-    const decoder = new TextDecoder()
-    let agentMsg = { role: 'agent', text: '', tool: null }
-    setMessages(prev => [...prev, agentMsg])
+    const data = await res.json()
+    onToolActive(data.agent || null)
 
-    while (true) {
-      const { done, value } = await reader.read()
-      if (done) break
-
-      const chunk = decoder.decode(value)
-      for (const line of chunk.split('\n')) {
-        if (!line.startsWith('data: ')) continue
-        const event = JSON.parse(line.slice(6))
-
-        if (event.type === 'tool') {
-          onToolActive(event.name)
-          setMessages(prev => {
-            const next = [...prev]
-            next[next.length - 1] = { ...next[next.length - 1], tool: event.name }
-            return next
-          })
-        }
-
-        if (event.type === 'response') {
-          onToolActive(null)
-          setMessages(prev => {
-            const next = [...prev]
-            next[next.length - 1] = { role: 'agent', text: event.text, tool: null }
-            return next
-          })
-        }
+    setMessages(prev => {
+      const next = [...prev]
+      next[next.length - 1] = {
+        role: 'agent',
+        text: data.text,
+        agent: data.agent,
+        tools: data.tools_used || [],
       }
-    }
+      return next
+    })
 
+    setTimeout(() => onToolActive(null), 1500)
     setLoading(false)
     inputRef.current?.focus()
   }
@@ -121,19 +112,19 @@ export default function ChatPanel({ onToolActive }) {
             {m.role === 'agent' && (
               <div style={styles.agentLabel}>
                 <div style={styles.agentDot} />
-                nucleus
+                {AGENT_LABELS[m.agent] || 'nucleus'}
               </div>
             )}
-            {m.tool && (
+            {m.tools && m.tools.length > 0 && (
               <div style={styles.toolBadge}>
                 <span style={styles.toolDot} />
-                {TOOL_LABELS[m.tool] || m.tool}
+                {m.tools.map(t => TOOL_LABELS[t] || t).join(' · ')}
               </div>
             )}
             {m.text ? (
               <div style={styles.msgText}>{m.text}</div>
             ) : (
-              !m.tool && <div style={styles.thinking}><span /><span /><span /></div>
+              <div style={styles.thinking}><span /><span /><span /></div>
             )}
           </div>
         ))}

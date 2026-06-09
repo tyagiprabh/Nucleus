@@ -6,7 +6,7 @@ class ComplianceAgent(BaseAgent):
     name = "compliance"
     # Component 5: Haiku for compliance — it's a structured lookup, not deep reasoning.
     # Cuts cost ~20x vs Sonnet with no quality loss on factual retrieval.
-    model = "claude-haiku-4-5-20251001"
+    model = "gemini-2.0-flash"
     max_iterations = 3  # compliance rarely needs more than one tool call
 
     system_prompt = """\

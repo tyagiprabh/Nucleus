@@ -3,7 +3,7 @@ from agents.base import BaseAgent
 
 class GeneralAgent(BaseAgent):
     name = "general"
-    model = "claude-sonnet-4-6"
+    model = "gemini-2.5-flash"
     max_iterations = 3  # no tools — short loop
 
     system_prompt = """\

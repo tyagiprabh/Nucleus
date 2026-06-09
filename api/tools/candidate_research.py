@@ -1,4 +1,18 @@
 import os
+
+SCHEMA = {
+    "name": "search_candidates",
+    "description": "Search LinkedIn, Indeed, and Glassdoor for job candidates matching a role and location.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "role":        {"type": "string", "description": "Job title (e.g. 'Store Manager', 'Sales Associate')"},
+            "location":    {"type": "string", "description": "City or country (e.g. 'Madrid', 'Amsterdam')"},
+            "max_results": {"type": "integer", "description": "Max candidates to return (default 10)"},
+        },
+        "required": ["role", "location"],
+    },
+}
 import httpx
 import json
 

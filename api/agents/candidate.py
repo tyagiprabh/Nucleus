@@ -4,7 +4,7 @@ from tools.candidate_research import SCHEMA, search_candidates
 
 class CandidateAgent(BaseAgent):
     name = "candidate"
-    model = "claude-sonnet-4-6"
+    model = "gemini-2.5-flash"
     max_iterations = 4
 
     system_prompt = """\

@@ -1,5 +1,18 @@
 import json
 
+SCHEMA = {
+    "name": "get_country_compliance_info",
+    "description": "Get employment law and compliance data for a country where Iris Galerie operates. Covers working hours, leave entitlements, sick pay, notice periods, overtime, and jewelry-sector AML rules.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "country": {"type": "string", "description": "Country: Spain, Italy, Netherlands, Poland, Singapore, France"},
+            "topic":   {"type": "string", "description": "Optional topic filter: sick_leave, overtime, notice_period, annual_leave, minimum_wage"},
+        },
+        "required": ["country"],
+    },
+}
+
 COMPLIANCE_DB = {
     "Spain": {
         "max_working_hours_per_week": 40,

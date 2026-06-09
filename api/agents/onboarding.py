@@ -4,7 +4,7 @@ from tools.onboarding import SCHEMA, generate_onboarding_checklist
 
 class OnboardingAgent(BaseAgent):
     name = "onboarding"
-    model = "claude-sonnet-4-6"
+    model = "gemini-2.5-flash"
     max_iterations = 5
 
     # Component 1: scoped system prompt — only onboarding context, no noise

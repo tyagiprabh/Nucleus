@@ -1,5 +1,20 @@
 import json
 
+SCHEMA = {
+    "name": "generate_offboarding_checklist",
+    "description": "Generate a complete offboarding checklist for a departing Iris Galerie employee. Covers system access revocation order, country-specific legal exit steps, equipment return, and data retention.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "employee_name": {"type": "string", "description": "Full name of the departing employee"},
+            "role":          {"type": "string", "description": "Employee's role"},
+            "country":       {"type": "string", "description": "Country: Spain, Italy, Netherlands, Poland, Singapore, France"},
+            "last_day":      {"type": "string", "description": "Last day of employment (e.g. '2026-06-30')"},
+        },
+        "required": ["employee_name", "role", "country", "last_day"],
+    },
+}
+
 # Deactivation order matters — revoke access before removing records
 DEACTIVATION_ORDER = [
     {"system": "CEGID Y2", "action": "Deactivate POS user account", "priority": "immediate"},

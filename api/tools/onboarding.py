@@ -1,5 +1,20 @@
 import json
 
+SCHEMA = {
+    "name": "generate_onboarding_checklist",
+    "description": "Generate a complete onboarding checklist for a new Iris Galerie employee. Includes IT systems to set up, legal requirements, and a suggested day-1 schedule — specific to their role and country.",
+    "input_schema": {
+        "type": "object",
+        "properties": {
+            "role":           {"type": "string", "description": "Employee role (e.g. 'Store Manager', 'Sales Associate')"},
+            "store_location": {"type": "string", "description": "Store city (e.g. 'Madrid', 'Amsterdam')"},
+            "country":        {"type": "string", "description": "Country: Spain, Italy, Netherlands, Poland, Singapore, France"},
+            "start_date":     {"type": "string", "description": "Start date (e.g. '2026-06-16')"},
+        },
+        "required": ["role", "store_location", "country", "start_date"],
+    },
+}
+
 # Systems required per role at Iris Galerie
 ROLE_SYSTEMS = {
     "store_manager":   ["CEGID Y2 (store + manager permissions)", "Google Workspace", "Freshservice", "NX Witness cameras", "Odoo HR"],
