@@ -23,9 +23,13 @@ Request: {message}"""
 def route(message: str) -> str:
     client = genai.Client(api_key=os.environ["GEMINI_API_KEY"])
     response = client.models.generate_content(
-        model="gemini-2.0-flash",
+        model="gemini-2.5-flash",
         contents=[{"role": "user", "parts": [{"text": _PROMPT.format(message=message)}]}],
-        config=types.GenerateContentConfig(max_output_tokens=10),
+        config=types.GenerateContentConfig(
+            max_output_tokens=10,
+            thinking_config=types.ThinkingConfig(thinking_budget=0),
+        ),
     )
-    category = response.text.strip().lower()
+    text = response.text or ""
+    category = text.strip().lower()
     return category if category in _CATEGORIES else "general"

@@ -51,7 +51,7 @@ class BaseAgent:
       tools          — Anthropic-format schemas, converted to Gemini on init (component 2)
     """
 
-    model: str = "gemini-2.0-flash"
+    model: str = "gemini-2.5-flash"
     max_iterations: int = 5
     system_prompt: str = ""
     tools: list = []
@@ -76,7 +76,10 @@ class BaseAgent:
         """
         system = f"Relevant context:\n{context}\n\n{self.system_prompt}" if context else self.system_prompt
 
-        config_kwargs = {"system_instruction": system}
+        config_kwargs = {
+            "system_instruction": system,
+            "thinking_config": types.ThinkingConfig(thinking_budget=0),
+        }
         if self._gemini_tools:
             config_kwargs["tools"] = self._gemini_tools
 

@@ -1,8 +1,8 @@
 # Lex — Employment Law Specialist
 
-**Agent ID:** `compliance` · **Model:** `gemini-2.0-flash` · **Max Iterations:** `3`
+**Agent ID:** `compliance` · **Model:** `gemini-2.5-flash` · **Max Iterations:** `3`
 
-> Model note: Lex uses `gemini-2.0-flash` (not 2.5-flash) — compliance lookups are structured retrieval, not open-ended reasoning. Faster and cheaper without sacrificing accuracy.
+> Model note: Lex uses `gemini-2.5-flash` (not 2.5-flash) — compliance lookups are structured retrieval, not open-ended reasoning. Faster and cheaper without sacrificing accuracy.
 
 ---
 
