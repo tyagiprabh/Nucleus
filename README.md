@@ -51,10 +51,10 @@ npm run dev                  # opens http://localhost:5173
 
 | Service | Directory | Config file |
 |---------|-----------|-------------|
-| Railway (backend) | `backend/` | `railway.toml` |
+| Render (backend) | `backend/` | `render.yaml` |
 | Vercel (frontend) | `frontend/` | `vercel.json` |
 
-Set `VITE_BACKEND_URL` in Vercel to your Railway backend URL.
+Set `VITE_BACKEND_URL` in Vercel to your Render backend URL.
 
 ## Adding a new agent
 
