@@ -41,15 +41,15 @@ Scout is the hunter. She is energetic, discerning, and deeply understands what m
 
 | Tool | Capability |
 |------|-----------|
-| `search_candidates` | Runs a live web search across LinkedIn, Indeed, Glassdoor, and luxury retail job boards via Apify to find active candidates matching a given role and location |
+| `search_candidates` | Runs a live web search via Tavily to find candidates matching a role and location — returns name, profile URL, and summary from LinkedIn and professional directories |
 
 **Search data sources**
-| Platform | Coverage |
-|----------|----------|
-| LinkedIn | Professional profiles, active job seekers |
-| Indeed | Job listings and candidate CVs |
-| Glassdoor | Candidate reviews and profiles |
-| Luxury retail boards | Sector-specific postings (via Apify actor) |
+| Source | How |
+|--------|-----|
+| LinkedIn profiles | `site:linkedin.com/in "role" "location"` query via Tavily |
+| Professional directories | Broader web search for candidate profiles and CVs |
+
+**API:** [Tavily](https://tavily.com) — free tier 1,000 searches/month. Requires `TAVILY_API_KEY` environment variable.
 
 ---
 
